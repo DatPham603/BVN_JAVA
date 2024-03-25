@@ -1,10 +1,14 @@
 import java.util.Scanner;
 public class PhuongTien {
+    private String tenChuXe;
+    private String loaiXe;
     private double giaXe;
     private double dungTichXylanh;
 
     // Constructor
-    public PhuongTien(double giaXe, double dungTichXylanh) {
+    public PhuongTien(String tenChuXe, String loaiXe, double giaXe, double dungTichXylanh) {
+        this.tenChuXe = tenChuXe;
+        this.loaiXe = loaiXe;
         this.giaXe = giaXe;
         this.dungTichXylanh = dungTichXylanh;
     }
@@ -19,7 +23,21 @@ public class PhuongTien {
             return giaXe * 0.05;
         }
     }
+    public String getTenChuXe() {
+        return tenChuXe;
+    }
 
+    public void setTenChuXe(String tenChuXe) {
+        this.tenChuXe = tenChuXe;
+    }
+
+    public String getLoaiXe() {
+        return loaiXe;
+    }
+
+    public void setLoaiXe(String loaiXe) {
+        this.loaiXe = loaiXe;
+    }
     // Getter và Setter cho các thuộc tính
     public double getGiaXe() {
         return giaXe;
@@ -36,6 +54,7 @@ public class PhuongTien {
     public void setDungTichXylanh(double dungTichXylanh) {
         this.dungTichXylanh = dungTichXylanh;
     }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         PhuongTien[] danhSachXe = null;;
@@ -44,7 +63,7 @@ public class PhuongTien {
         do {
             System.out.println("MENU:");
             System.out.println("1. Nhập thông tin và tạo danh sách các xe");
-            System.out.println("2. Xuất bảng kê khai tiền thuế trước bạ của các xe");
+            System.out.println("2. Xuất bảng kê khai tiền thuế của các xe");
             System.out.println("3. Thoát");
             System.out.print("Chọn: ");
             choice = scanner.nextInt();
@@ -56,11 +75,16 @@ public class PhuongTien {
                     danhSachXe = new PhuongTien[n];
                     for (int i = 0; i < n; i++) {
                         System.out.println("Nhập thông tin xe thứ " + (i + 1) + ":");
+                        scanner.nextLine();
+                        System.out.print("Nhập tên chủ xe: ");
+                        String tenChuXe = scanner.nextLine();
+                        System.out.print("Nhập loại xe: ");
+                        String loaiXe = scanner.nextLine();
                         System.out.print("Nhập giá xe: ");
                         double giaXe = scanner.nextDouble();
                         System.out.print("Nhập dung tích xylanh: ");
                         double dungTichXylanh = scanner.nextDouble();
-                        danhSachXe[i] = new PhuongTien(giaXe, dungTichXylanh);
+                        danhSachXe[i] = new PhuongTien(tenChuXe, loaiXe, giaXe, dungTichXylanh);
                     }
                     break;
 
@@ -68,11 +92,11 @@ public class PhuongTien {
                     if (danhSachXe == null) {
                         System.out.println("Chưa có thông tin về các xe.");
                     } else {
-                        System.out.println("Bảng kê khai tiền thuế trước bạ của các xe:");
-                        System.out.printf("%-20s%-20s%-20s\n", "STT", "Giá xe", "Thuế trước bạ");
+                        System.out.println("Bảng kê khai tiền thuế của các xe:");
+                        System.out.printf("%-20s%-20s%-20s%-20s%-20s\n", "STT", "Tên chủ xe", "Loại xe", "Giá xe", "Thuế");
                         for (int i = 0; i < danhSachXe.length; i++) {
                             double thue = danhSachXe[i].tinhThueTruocBa();
-                            System.out.printf("%-20d%-20.2f%-20.2f\n", (i + 1), danhSachXe[i].getGiaXe(), thue);
+                            System.out.printf("%-20d%-20s%-20s%-20.2f%-20.2f\n", (i + 1), danhSachXe[i].getTenChuXe(), danhSachXe[i].getLoaiXe(), danhSachXe[i].getGiaXe(), thue);
                         }
                     }
                     break;
